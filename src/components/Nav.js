@@ -1,17 +1,13 @@
 import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
 import { Container } from "@material-ui/core";
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import dsclogo from "../assets/dsc_logo.png";
 import styled from "styled-components";
 import "../components/styles/NavBar.css";
-import {
-  StyledAppBar,
-  StyledLink,
-  StyledTypographyNav
-} from "../toggle/StyledComponents";
-import ToggleMode from "../toggle/ToggleButton";
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -22,6 +18,7 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     display: "none",
+    color: "#3C4858",
     [theme.breakpoints.up("sm")]: {
       display: "block"
     }
@@ -44,12 +41,18 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "space-between",
     fontSize: "1.2em",
     fontWeight: "300",
-    textDecoration: "none"
+    textDecoration: "none",
+    color: "black"
   },
   logo: {
     height: "30px",
     objectFit: "contain"
-  }
+  },
+  NoStyleLink : {
+    textDecoration : 'none',
+    color : 'inherit',
+    display : 'contents'
+}
 }));
 
 const NavAlt = props => {
@@ -87,47 +90,54 @@ const NavAlt = props => {
   return (
     <div className={classes.grow}>
       <ResponsiveDiv>
-        <StyledAppBar position="fixed" id="appbar" className="fill">
+        <AppBar
+          position="fixed"
+          style={{ backgroundColor: "white" }}
+          id="appbar"
+          className="fill"
+        >
           <Container fixed>
             <Toolbar>
-              <img
-                src={dsclogo}
-                alt="logo"
-                className={classes.logo}
-                id="logo"
-              />
-              <StyledTypographyNav
-                className={classes.title}
-                variant="h6"
-                noWrap
-                id="text"
-              >
-                &nbsp; DSC TIET
-              </StyledTypographyNav>
+            <Link to= '/#' className={classes.NoStyleLink} >
+                <img
+                  src={dsclogo}
+                  alt="logo"
+                  className={classes.logo}
+                  id="logo"
+                />
+                <Typography
+                  className={classes.title}
+                  variant="h6"
+                  noWrap
+                  id="text"
+                >
+                  &nbsp; DSC TIET
+                </Typography>
+            </Link>
               <div className={classes.grow} />
               <div className={classes.sectionDesktop}>
                 <div style={{ paddingRight: "10px" }}>
-                  <StyledLink to="/" className={classes.button}>
+                  <Link to="/" className={classes.button}>
                     Home
-                  </StyledLink>
+                  </Link>
                 </div>
                 <div style={{ paddingRight: "10px" }}>
-                  <StyledLink to="/events" className={classes.button}>
+                  <Link to="/events" className={classes.button}>
                     Events
-                  </StyledLink>
+                  </Link>
                 </div>
                 <div style={{ paddingRight: "10px" }}>
-                  <StyledLink to="/projects" className={classes.button}>
+                  <Link to="/projects" className={classes.button}>
                     Projects
-                  </StyledLink>
+                  </Link>
                 </div>
                 <div style={{ paddingRight: "10px" }}>
-                  <StyledLink to="/team" className={classes.button}>
+                  <Link to="/team" className={classes.button}>
                     Team
-                  </StyledLink>
+                  </Link>
                 </div>
                 <div style={{ paddingRight: "10px" }}>
-                  <StyledLink
+                  <Link
                     onClick={e => {
                       e.preventDefault();
                       window.location.href =
@@ -137,10 +147,10 @@ const NavAlt = props => {
                     className={classes.button}
                   >
                     Blog
-                  </StyledLink>
+                  </Link>
                 </div>
                 <div style={{ paddingRight: "10px" }}>
-                  <StyledLink
+                  <Link
                     onClick={e => {
                       e.preventDefault();
                       window.location.href = "https://raw-talent.webflow.io/";
@@ -149,13 +159,12 @@ const NavAlt = props => {
                     className={classes.button}
                   >
                     Podcast
-                  </StyledLink>
+                  </Link>
                 </div>
-                <ToggleMode />
               </div>
             </Toolbar>
           </Container>
-        </StyledAppBar>
+        </AppBar>
       </ResponsiveDiv>
     </div>
   );

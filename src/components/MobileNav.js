@@ -1,14 +1,17 @@
 import React, { Fragment } from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-import { withRouter } from "react-router-dom";
+import { Link , withRouter } from "react-router-dom";
 import styled from "styled-components";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
+import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import HomeIcon from "@material-ui/icons/Home";
 import EventIcon from "@material-ui/icons/Event";
@@ -16,15 +19,6 @@ import CodeIcon from "@material-ui/icons/Code";
 import GroupIcon from "@material-ui/icons/Group";
 import BookIcon from "@material-ui/icons/Book";
 import ChatIcon from "@material-ui/icons/Chat";
-import { createGlobalStyle } from "styled-components";
-import style from "styled-theming";
-import {
-  StyledDiv,
-  StyledAppBar,
-  StyledList,
-  StyledListItemIcon
-} from "../toggle/StyledComponents";
-import ToggleMode from "../toggle/ToggleButton";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -53,31 +47,14 @@ const useStyles = makeStyles(theme => ({
   },
   fullList: {
     width: "auto"
-  }
+  },
+  NoStyleLink : {
+    textDecoration : 'none',
+    color : 'inherit',
+    display : 'contents'
+}
 }));
 
-const getBackground = style("mode", {
-  light: "#fafafa",
-  dark: "#202020"
-});
-const getForeground = style("mode", {
-  light: "#5A5A5A",
-  dark: "#EEE"
-});
-
-const GlobalStyle = createGlobalStyle`
-  body{
-    background-color: ${getBackground};
-    color: ${getForeground};
-  }
-  `;
-const getBg = style("mode", {
-  light: "#ffffff",
-  dark: "#202020"
-});
-const StyledSwipeableDrawer = styled(SwipeableDrawer)`
-  background-color: ${getBg};
-`;
 const Nav = props => {
   const classes = useStyles();
 
@@ -103,7 +80,7 @@ const Nav = props => {
       onClick={toggleDrawer(false)}
       onKeyDown={toggleDrawer(false)}
     >
-      <StyledList style={{ minHeight: "100vh" }}>
+      <List>
         {["Home", "Events", "Projects", "Team", "Blog", "Podcast"].map(
           (text, index) => (
             <ListItem
@@ -125,28 +102,27 @@ const Nav = props => {
                   : props.history.push("/");
               }}
             >
-              <StyledListItemIcon>
+              <ListItemIcon>
                 {index === 0 && <HomeIcon />}
                 {index === 1 && <EventIcon />}
                 {index === 2 && <CodeIcon />}
                 {index === 3 && <GroupIcon />}
                 {index === 4 && <BookIcon />}
                 {index === 5 && <ChatIcon />}
-              </StyledListItemIcon>
+              </ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
           )
         )}
-      </StyledList>
+      </List>
     </div>
   );
 
   return (
     <Fragment>
-      <GlobalStyle />
-      <StyledDiv className={classes.root}>
+      <div className={classes.root}>
         <MobileDiv>
-          <StyledAppBar position="fixed" color="white" className>
+          <AppBar position="fixed" color="white" className>
             <Toolbar>
               <IconButton
                 edge="start"
@@ -157,25 +133,22 @@ const Nav = props => {
               >
                 <MenuIcon />
               </IconButton>
-              <Typography variant="h6" className={classes.title}>
-                DSC TIET
-              </Typography>
-              <ToggleMode
-                style={{
-                  float: "right"
-                }}
-              />
+              <Link to= '/#' className={classes.NoStyleLink} >
+                <Typography variant="h6" className={classes.title}>
+                  DSC TIET
+                </Typography>
+              </Link>
             </Toolbar>
-          </StyledAppBar>
-          <StyledSwipeableDrawer
+          </AppBar>
+          <SwipeableDrawer
             anchor={"left"}
             open={sideDrawer}
             onClose={toggleDrawer(false)}
           >
             {list()}
-          </StyledSwipeableDrawer>
+          </SwipeableDrawer>
         </MobileDiv>
-      </StyledDiv>
+      </div>
     </Fragment>
   );
 };
